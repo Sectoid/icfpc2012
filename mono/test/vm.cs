@@ -12,8 +12,10 @@ public class VMTest {
     var cmdSeq = argv[0];
     var expectedScore = int.Parse(argv[1]);
     var finState = map.Execute(cmdSeq);
-    Console.Error.WriteLine("Result: {0}, expected: {1}, lambdas collected: {2}", finState.Score, expectedScore, finState.LambdasCollected);
-    return 0;
+    Console.Error.WriteLine("Result: {0}: got: {1}, expected: {2}, lambdas collected: {3}", 
+                            (finState.Score == expectedScore) ? "PASS" : "FAIL",
+                            finState.Score, expectedScore, finState.LambdasCollected);
+    return (finState.Score == expectedScore) ? 0 : -1;
   }
 
 }
