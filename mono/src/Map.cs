@@ -59,6 +59,10 @@ public class Map {
       var line = lineMap[i];
       for(var j = 0; j < line.Length; j++) {
         retVal.state[i,j] = (Item)(line[j]);
+        if(retVal.state[i,j] == Item.Robot) {
+          retVal.X = j;
+          retVal.Y = i;
+        };
       }
     }
 
@@ -98,22 +102,25 @@ public class Map {
   public int M { get; private set; }
   public int N { get; private set; }
 
+  public int X { get; private set; }
+  public int Y { get; private set; }
+
   public int Water { get; private set; }
   public int Flooding { get; private set; }
   public int Waterproof { get; private set; }
 
   public Item this[int x, int y] {
     get {
-      return this.state[x,y];
+      return this.state[y,x];
     }
     set {
-      this.state[x,y] = value;
+      this.state[y,x] = value;
     }
   }
 
   public override string ToString() {
     var sb = new StringBuilder();
-    sb.AppendFormat("Map ({0} x {1})\n", M, N);
+    sb.AppendFormat("Map ({0} x {1}), robot position: ({2} x {3})\n", M, N, X, Y);
     for(var i = M - 1; i >= 0; i--) {
       for(var j = 0; j < N; j++) {
         sb.Append((char)(state[i,j]));
