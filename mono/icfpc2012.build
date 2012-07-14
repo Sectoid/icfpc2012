@@ -24,6 +24,7 @@
         <include name="${src.dir}AssemblyInfo.cs" />
         <include name="${src.dir}main.cs" />
         <include name="${src.dir}Map.cs" />
+        <include name="${src.dir}Util.cs" />
       </sources>
       <references>
       </references>

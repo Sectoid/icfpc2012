@@ -27,6 +27,7 @@ public enum Command {
   Abort = 'A',
 }
 
+[Serializable]
 public class Map {
   private Item[,] state = null;
 

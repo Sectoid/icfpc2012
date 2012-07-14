@@ -10,7 +10,7 @@ public static class Miner {
 
     var map = Map.Read(Console.In);
 
-    Console.Error.WriteLine("Map is loaded: {0}", map);
+    Console.Error.WriteLine("Map is loaded: {0}, map takes {1} bytes in memory", map, map.GetObjectSize());
 
     Console.WriteLine("A"); // Only abort for now ;)
 
