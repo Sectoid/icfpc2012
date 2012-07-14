@@ -250,7 +250,7 @@ public class Map {
         if((old[x, y] == Item.Rock) && ((y - 1) >= 0) && (old[x,y - 1] == Item.Empty)) {
           this[x,y] = Item.Empty;
           this[x,y - 1] = Item.Rock;
-        } else if((old[x, y] == Item.Rock) && ((y-1) >= 0) && (x+1 < old.N) && (old[x, y-1] == Item.Lambda) && (old[x+1,y] == Item.Empty) && (old[x+1,y-1] == Item.Empty)) {
+        } else if((old[x, y] == Item.Rock) && ((y-1) >= 0) && (x+1 < old.N) && (old[x, y-1] == Item.Rock) && (old[x+1,y] == Item.Empty) && (old[x+1,y-1] == Item.Empty)) {
           this[x,y] = Item.Empty;
           this[x+1, y-1] = Item.Rock;
         } else if((old[x, y] == Item.Rock) && ((y-1) >= 0) && (x-1 >= 0) && ((y+1) < old.M) && ((x+1) < old.N) && (old[x, y-1] == Item.Rock) && ((old[x+1,y] != Item.Empty) || (old[x+1,y-1] != Item.Empty)) && (old[x-1,y] == Item.Empty) && (old[x-1,y-1] == Item.Empty)) {
