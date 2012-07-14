@@ -49,5 +49,10 @@
       <!-- </pkg-references> -->
     </csc>
   </target>
+  <target name="run-tests" depends="test">
+    <exec workingdir="${out.dir}" program="sh">
+      <arg value="test-vm.sh" />
+    </exec>
+  </target>
 
 </project>
