@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<project name="icfpc2012" default="build" basedir=".">
+  <description></description>
+
+  <!-- Build directories -->
+  <property name="lib.dir" value="bin/" overwrite="false" />
+  <property name="out.dir" value="bin/" overwrite="false" />
+  <property name="src.dir" value="src/" overwrite="false" />
+  <property name="test.dir" value="test/" overwrite="false" />
+  <property name="deps.dir" value="deps/" overwrite="false" />
+  <!-- <property name="test.dir" value="test/" /> -->
+
+
+  <property name="debug" value="true" />
+  <property name="force" value="false" />
+
+  <target name="clean" description="cleans the tree">
+    <delete file="${out.dir}/icfpc2012.exe" failonerror="false" />
+  </target>
+
+  <target name="build" description="compiles the source code">
+    <csc target="exe" output="${out.dir}/icfpc2012.exe" debug="${debug}">
+      <sources>
+        <include name="${src.dir}AssemblyInfo.cs" />
+        <include name="${src.dir}main.cs" />
+      </sources>
+      <references>
+      </references>
+      <!-- <pkg-references> -->
+      <!--   <package name="log4net" /> -->
+      <!-- </pkg-references> -->
+    </csc>
+  </target>
+
+</project>
