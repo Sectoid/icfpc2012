@@ -1,0 +1,47 @@
+<html>
+<head>
+<title>403</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251" />
+<style type="text/css">
+body          {margin:0; padding:0; background-color:#fff; color:#000;}
+a             {color:#00c;}
+h1            {font-size:150%; margin:0 0 -0.7em; font-weight:normal;}
+td.headCode   {font:200% sans-serif; color:white; background-color:#999; padding:0 11px;}
+td.headText   {padding:1px 5px;}
+td.lnk        {border:#ddd 1px solid; color:#666; text-align:center;}
+td.lnkCapture {font-size:80%; font-weight:bold; color:white; background-color:#999;}
+td.small      {font-size:80%;}
+</style>
+</head>
+<body>
+<table border="0" cellspacing="1" cellpadding="0" height="48">
+<tr valign="bottom">
+<td><a href="http://www.yandex.ru/"><img src="http://www.yandex.ru/i/yandex_gray.gif" width="78" height="48" border="0" /></a></td>
+<td class="headCode">403</td>
+<td class="headText">Доступ запрещён</td>
+</tr>
+</table>
+<br />
+<table width="100%" border="0" cellspacing="20" cellpadding="0">
+<tr valign="top">
+<td width="90%"><h1>Доступ к нашему сервису запрещен!</h1>
+<br />
+<p>Вполне возможно, что ваш компьютер заражен вирусом или spyware (вредоносной программой), которая автоматически обращается к Яндексу.</p>
+<p>Рекомендуем вам проверить компьютер на вирусы или обратиться к администратору вашего компьютера или вашей сети.</p>
+<p>О других возможных причинах и способах их устранения вы можете узнать <a href="http://block.yandex.ru/possiblereasons.shtml">здесь</a>.</p>
+</td>
+<td width="50%">
+</td>
+</tr>
+</table>
+<hr noshade size="1" />
+<table width="100%" border="0" cellspacing="10" cellpadding="0">
+<tr valign="top">
+<td width="50%" class="small">
+Copyright &copy; 2012 &laquo;Яндекс&raquo;<br/>
+</td>
+<td width="50%" class="small"></td>
+</tr>
+</table>
+</body>
+</html>
