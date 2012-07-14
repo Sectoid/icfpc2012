@@ -196,9 +196,7 @@ public class Map {
       case Command.Down: nY--; break;
     }
 
-    if(cmd != Command.Wait) {
-      this.Score--; // Movement attempt. Reducing score.
-    }
+    this.Score--; // Reducing score.
 
     // Can't move out of map boundaries
     if((nX < 0) || (nX >= this.N)) {
