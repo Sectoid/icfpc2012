@@ -163,7 +163,20 @@ public class Map {
     return (Map.first == this) ? Map.second : Map.first;
   }
 
-  public Map ExecuteCommand(Command cmd) {
+  public Map Execute(string cmdSeq) {
+    var tmp = this;
+
+    foreach(var cmdCh in cmdSeq) {
+      tmp = tmp.Execute(cmdCh);
+    }
+    return tmp;
+  }
+
+  public Map Execute(char cmdCh) {
+    return Execute((Command)cmdCh);
+  }
+
+  public Map Execute(Command cmd) {
     var next = this.Rotate();
 
     if(cmd == Command.Abort) {
@@ -186,9 +199,11 @@ public class Map {
 
     // Can't move out of map boundaries
     if((nX < 0) || (nX >= this.N)) {
+      Console.Error.WriteLine("Fail!");
       cmd = Command.Wait;
     }
     if((nY < 0) || (nY >= this.M)) {
+      Console.Error.WriteLine("Fail!");
       cmd = Command.Wait;
     }
     
@@ -227,19 +242,20 @@ public class Map {
 
     // Map update loop
     for(int i = 0; i < this.M; i++) {
-      for(int j = 0; i < this.N; j++) {
+      for(int j = 0; j < this.N; j++) {
         var x = j; var y = i;
         
-        if((old[x, y] == Item.Rock) && (old[x,y - 1] == Item.Empty)) {
+        // Console.Error.WriteLine("{0}x{1} Processing ({2};{3})", M, N, x, y);
+        if((old[x, y] == Item.Rock) && ((y - 1) >= 0) && (old[x,y - 1] == Item.Empty)) {
           this[x,y] = Item.Empty;
           this[x,y - 1] = Item.Rock;
-        } else if((old[x, y] == Item.Rock) && (old[x, y-1] == Item.Lambda) && (old[x+1,y] == Item.Empty) && (old[x+1,y-1] == Item.Empty)) {
+        } else if((old[x, y] == Item.Rock) && ((y-1) >= 0) && (x+1 < old.N) && (old[x, y-1] == Item.Lambda) && (old[x+1,y] == Item.Empty) && (old[x+1,y-1] == Item.Empty)) {
           this[x,y] = Item.Empty;
           this[x+1, y-1] = Item.Rock;
-        } else if((old[x, y] == Item.Rock) && (old[x, y-1] == Item.Rock) && ((old[x+1,y] != Item.Empty) || (old[x+1,y-1] != Item.Empty)) && (old[x-1,y] == Item.Empty) && (old[x-1,y-1] == Item.Empty)) {
+        } else if((old[x, y] == Item.Rock) && ((y-1) >= 0) && (x-1 >= 0) && ((y+1) < old.M) && ((x+1) < old.N) && (old[x, y-1] == Item.Rock) && ((old[x+1,y] != Item.Empty) || (old[x+1,y-1] != Item.Empty)) && (old[x-1,y] == Item.Empty) && (old[x-1,y-1] == Item.Empty)) {
           this[x,y] = Item.Empty;
           this[x-1, y-1] = Item.Rock;
-        } else if((old[x, y] == Item.Rock) && (old[x, y-1] == Item.Lambda) && (old[x+1,y] == Item.Empty) && (old[x+1,y-1] == Item.Empty)) {
+        } else if((old[x, y] == Item.Rock) && ((y-1) >= 0) && (old[x, y-1] == Item.Lambda) && ((x+1) < old.N) && (old[x+1,y] == Item.Empty) && (old[x+1,y-1] == Item.Empty)) {
           this[x,y] = Item.Empty;
           this[x+1, y-1] = Item.Rock;
         } else if((old[x,y] == Item.ClosedLift) && (old.LambdasLeft == 0)) {
@@ -250,6 +266,7 @@ public class Map {
       }
     }
 
+    // Console.Error.WriteLine("Turn done. Score: {0}", this.Score);
     return this;
   }
 
@@ -266,10 +283,12 @@ public class Map {
 
   private void EnterLift() {
     Score += (50 * LambdasCollected);
+    Console.Error.WriteLine("Lift entered!");
   }
 
   private void Abort() {
     Score += (25 * LambdasCollected);
+    Console.Error.WriteLine("Aborted!");
   }
 }
 

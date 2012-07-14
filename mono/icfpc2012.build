@@ -34,4 +34,20 @@
     </csc>
   </target>
 
+  <target name="test" depends="build" description="compiles the test code">
+    <csc target="exe" output="${out.dir}/test-vm.exe" debug="${debug}">
+      <sources>
+        <include name="${test.dir}vm.cs" />
+        <include name="${src.dir}AssemblyInfo.cs" />
+        <include name="${src.dir}Map.cs" />
+        <include name="${src.dir}Util.cs" />
+      </sources>
+      <references>
+      </references>
+      <!-- <pkg-references> -->
+      <!--   <package name="log4net" /> -->
+      <!-- </pkg-references> -->
+    </csc>
+  </target>
+
 </project>
