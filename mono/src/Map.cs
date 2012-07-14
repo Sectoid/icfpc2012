@@ -62,12 +62,14 @@ public class Map {
     for(var i = lineMap.Count - 1; i >= 0; i--) {
       var line = lineMap[i];
       for(var j = 0; j < line.Length; j++) {
-        retVal.state[i,j] = (Item)(line[j]);
-        if(retVal.state[i,j] == Item.Robot) {
-          retVal.X = j;
-          retVal.Y = i;
+        var x = j; var y = lineMap.Count - 1 - i;
+
+        retVal[x,y] = (Item)(line[j]);
+        if(retVal[x,y] == Item.Robot) {
+          retVal.X = x;
+          retVal.Y = y;
         }
-        else if(retVal.state[i,j] == Item.Lambda) {
+        else if(retVal[x,y] == Item.Lambda) {
           retVal.LambdasLeft++;
         }
       }
@@ -168,6 +170,7 @@ public class Map {
 
     foreach(var cmdCh in cmdSeq) {
       tmp = tmp.Execute(cmdCh);
+      // Console.Error.WriteLine("State: {0}", tmp.ToString());
     }
     return tmp;
   }
@@ -199,11 +202,9 @@ public class Map {
 
     // Can't move out of map boundaries
     if((nX < 0) || (nX >= this.N)) {
-      Console.Error.WriteLine("Fail!");
       cmd = Command.Wait;
     }
     if((nY < 0) || (nY >= this.M)) {
-      Console.Error.WriteLine("Fail!");
       cmd = Command.Wait;
     }
     
@@ -225,11 +226,13 @@ public class Map {
     }
     else if(nItem == Item.Rock) {
       if((cmd == Command.Right) && ((nX + 1) < this.N) && (this[nX + 1, nY] == Item.Empty)) {
+        // Console.Error.WriteLine("Moving Rock right");
         this.Move(nX, nY);
         this[nX + 1, nY] = Item.Rock;
       }
       else if((cmd == Command.Left) && ((nX - 1) >= 0) && (this[nX - 1, nY] == Item.Empty)) {
-        Move(nX, nY);
+        // Console.Error.WriteLine("Moving Rock left");
+        this.Move(nX, nY);
         this[nX - 1, nY] = Item.Rock;
       }
     }
@@ -283,12 +286,12 @@ public class Map {
 
   private void EnterLift() {
     Score += (50 * LambdasCollected);
-    Console.Error.WriteLine("Lift entered!");
+    // Console.Error.WriteLine("Lift entered!");
   }
 
   private void Abort() {
     Score += (25 * LambdasCollected);
-    Console.Error.WriteLine("Aborted!");
+    // Console.Error.WriteLine("Aborted!");
   }
 }
 
