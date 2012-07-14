@@ -31,7 +31,8 @@ public enum RobotState {
   Mining,
   Abort,
   Finish,
-  Dead,
+  Smashed,
+  Sank,
 }
 
 [Serializable]
@@ -86,17 +87,17 @@ public class Map {
     while(src.Peek() >= 0) {
       var dataStr = src.ReadLine();
       var data = dataStr.Split(' ', '\t');
-      if(data[0].StartsWith("Water")) {
+      if(data[0] == "Water ") {
         // Console.Error.WriteLine("Water tag found!");
         retVal.Water = int.Parse(data[1]);
         continue;
       }
-      else if(data[0].StartsWith("Flooding")) {
+      else if(data[0] == "Flooding ") {
         // Console.Error.WriteLine("Flooding tag found!");
         retVal.Flooding = int.Parse(data[1]);
         continue;
       }
-      else if(data[0].StartsWith("Waterproof")) {
+      else if(data[0] == "Waterproof") {
         // Console.Error.WriteLine("Waterproof tag found!");
         retVal.Waterproof = int.Parse(data[1]);
         continue;
@@ -116,7 +117,8 @@ public class Map {
     M = m; N = n; X = 0; Y = 0;
     Score = 0; LambdasLeft = 0; LambdasCollected = 0;
     Water = 0; Flooding = 0; Waterproof = 10;
-    State = RobotState.Mining; 
+    State = RobotState.Mining;
+    TurnsUnderWater = 0; TurnNumber = 0;
   }
 
   public Map Clone() {
@@ -131,7 +133,8 @@ public class Map {
     Score = other.Score; 
     LambdasLeft = other.LambdasLeft; LambdasCollected = other.LambdasCollected;
     Water = other.Water; Flooding = other.Flooding; Waterproof = other.Waterproof;
-    State = other.State;
+    State = other.State; 
+    TurnsUnderWater = other.TurnsUnderWater; TurnNumber = other.TurnNumber;
     return this;
   }
 
@@ -148,6 +151,8 @@ public class Map {
   public int Water { get; private set; }
   public int Flooding { get; private set; }
   public int Waterproof { get; private set; }
+  public int TurnsUnderWater {get; private set; }
+  public int TurnNumber {get; private set; }
 
   public Item this[int x, int y] {
     get {
@@ -249,6 +254,15 @@ public class Map {
       }
     }
 
+    // Underwater checks
+    if(Y <= Water) {
+      TurnsUnderWater++;
+    } else {
+      TurnsUnderWater = 0;
+    }
+
+    TurnNumber++;
+    
     return next.Update(this);
   }
 
@@ -282,9 +296,18 @@ public class Map {
     }
 
     // Check 'Death' conditions
-    if(((Y+1) < M) && (old[X, Y+1] != Item.Rock) && (this[X, Y+1] == Item.Rock)) {
-      State = RobotState.Dead;
+    if(((old.Y+1) < old.M) && (old[X, Y+1] != Item.Rock) && (this[X, Y+1] == Item.Rock)) {
+      this.State = RobotState.Smashed;
     }
+    if(old.TurnsUnderWater > old.Waterproof) {
+      this.State = RobotState.Sank; // Она утонула. (с) ВВП
+    }
+
+    // Rise water!
+    if((old.Flooding != 0) && (TurnNumber % Flooding == 0)) {
+      Water++;
+    }
+
     // Console.Error.WriteLine("Turn done. Score: {0}", this.Score);
     return this;
   }

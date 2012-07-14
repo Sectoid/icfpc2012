@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo Generic
 cat ../../map/base/contest1.map | mono test-vm.exe LDRDDUULLDLDL 212
 cat ../../map/base/contest1.map | mono test-vm.exe LDRDDUULLDLDWL 211
 cat ../../map/base/contest2.map | mono test-vm.exe RRRRWLRULURULLLDDLDL 280
@@ -18,6 +19,7 @@ cat ../../map/stbuehler/ems5v2.map | mono test-vm.exe RRRURRRRRRDDDDDDLDRDRUUULU
 cat ../../map/stbuehler/pacman2.map | mono test-vm.exe RUURRRRRRRRRRRDDLLLDDRRRDDLLLLLLLLLLLLRUURRRRUURRDDRLUUUUUUUUUUUURRRRRUULLLLLDUUUUURRRRRDDDUUULLLLLLLLLLLDDDDRRRRRLDDLLLLDDLLUULLLLUURRRRRLUUUULLLLLLDDDDRLLLLLLUUUURRRRRDDDDDDLLLLLUDRRRRRDDDDDDDDRRRRRRDDLLLLDDRRRRDDLLLLLLLLLLLUURRRRRUUUULLLLLDDRRRDDRRUUUUUUUULLLLLL 15035
 
 # Трупы
+echo Corpse
 cat ../../map/base/contest2.map | mono test-vm.exe RRRRUD 19
 cat ../../map/base/contest3.map | mono test-vm.exe RDRDRDDDDLUD -12
 cat ../../map/base/contest3.map | mono test-vm.exe LDDDRRRRDDDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUUDUDUDUDUDDUDUDUDUDUDUDUUDDUUDDUUUDDDUUDDUDUDUDUDULD -52
@@ -26,29 +28,24 @@ cat ../../map/base/contest6.map | mono test-vm.exe RUULRRRRRRRRRRUUULLUD 4
 # Аборты
 
 # Floods кое где с абортами и трупами
-#cat ../../map/flood/flood1.map | mono test-vm.exe LLLLDDDRRRDDRURDUULLLLURRRRRRRDDDD 941
-#cat ../../map/flood/flood1.map | mono test-vm.exe LLLLDDDRRRDDRRULULLLURRRRRRRDDDD 943
-#cat ../../map/flood/flood1.map | mono test-vm.exe LLLLDDDRRRDDRRULULLLURRRRRRRA 622
-#cat ../../map/flood/flood1.map | mono test-vm.exe LLLLDDDRRLURRRRRRRDUULLLLLLLDRRRRRLLLL 137
-#cat ../../map/flood/flood1.map | mono test-vm.exe LLLLDDDRRRDDRRULULLLURRRRRRRUULLLLA 616
-#cat ../../map/flood/flood2.map | mono test-vm.exe RRRRUA 45
-#cat ../../map/flood/flood2.map | mono test-vm.exe UDRRUDRRULURULLLLDDDL 279
-#cat ../../map/flood/flood3.map | mono test-vm.exe LLUURRRRRRURRDDDLLRRUUULLLLLLLUURRRRRRULUULULLDURRDLDRULLDLLLA 789
-#cat ../../map/flood/flood3.map | mono test-vm.exe LLUURRRRRRURRDLRDDLLRRUUUUUULLLURULULDDLLLDDDDUURRRRRRULLLDDDDDDD 1285
-#cat ../../map/flood/flood4.map | mono test-vm.exe LDDDDRRRRRLDDURRRRRRRURRDDDRRRRRRRULLLLUURRRRUWLUULRRDLLLLLLLLLLLLLLLLLLLLLLLLUUULLLLLLLLLLUUUURRRRRRRUURRDDDDRRRRRRRRRDUUUUUURRRDDDDDDDDDRRRRRRRRRUUULLLDRRRDDRDRDRDRR 1558
-#cat ../../map/flood/flood5.map | mono test-vm.exe DRDRDRDRRLUULLLLUUURRDDRRRUULURDR 567
+echo "Flood"
+cat ../../map/flood/flood1.map | mono test-vm.exe LLLLDDDRRRDDRURDUULLLLURRRRRRRDDDD 941
+cat ../../map/flood/flood1.map | mono test-vm.exe LLLLDDDRRRDDRRULULLLURRRRRRRDDDD 943
+cat ../../map/flood/flood1.map | mono test-vm.exe LLLLDDDRRRDDRRULULLLURRRRRRRA 622
+cat ../../map/flood/flood1.map | mono test-vm.exe LLLLDDDRRLURRRRRRRDUULLLLLLLDRRRRRLLLL 137
+cat ../../map/flood/flood1.map | mono test-vm.exe LLLLDDDRRRDDRRULULLLURRRRRRRUULLLLA 616
+cat ../../map/flood/flood2.map | mono test-vm.exe RRRRUA 45
+cat ../../map/flood/flood2.map | mono test-vm.exe UDRRUDRRULURULLLLDDDL 279
+cat ../../map/flood/flood3.map | mono test-vm.exe LLUURRRRRRURRDDDLLRRUUULLLLLLLUURRRRRRULUULULLDURRDLDRULLDLLLA 789
+cat ../../map/flood/flood3.map | mono test-vm.exe LLUURRRRRRURRDLRDDLLRRUUUUUULLLURULULDDLLLDDDDUURRRRRRULLLDDDDDDD 1285
+cat ../../map/flood/flood4.map | mono test-vm.exe LDDDDRRRRRLDDURRRRRRRURRDDDRRRRRRRULLLLUURRRRUWLUULRRDLLLLLLLLLLLLLLLLLLLLLLLLUUULLLLLLLLLLUUUURRRRRRRUURRDDDDRRRRRRRRRDUUUUUURRRDDDDDDDDDRRRRRRRRRUUULLLDRRRDDRDRDRDRR 1558
+cat ../../map/flood/flood5.map | mono test-vm.exe DRDRDRDRRLUULLLLUUURRDDRRRUULURDR 567
 
 # Телепорты
+#echo "Teleport"
 #cat ../../map/trampoline/trampoline1.map | mono test-vm.exe RDDDURRDLRURRLRDULLDRULLLULLLLLLURRRRRDRD 409
 #cat ../../map/trampoline/trampoline1.map | mono test-vm.exe RDDDURRRRDULLDLRRLUULLLURRRRRDRD 418
 #cat ../../map/trampoline/trampoline2.map | mono test-vm.exe ULLLLULDURRRRRRDDLULDLLLLLULRULLLDDLULDLUURRRULLLLURURRULULLLDLDRR 1734
 #cat ../../map/trampoline/trampoline3.map | mono test-vm.exe RRRRDDRDDDDDDDLLLRRRRRRRUURRUUURRRRRRUURRRRRRRRRRRRRRRRRDDDLDDDDRRRLULLDLLLLLLLLDDDDDDLLDLDDDLLLLUUUULDDDLUUURRDDDDRRRURRDRRRDDRRRRRRRRRRLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLRRRRRUUUUURRLLURRUUUURRRUUUUUUUUURRRRRRRRRRDDRRRRRRRRRRRRRRRRRRRRURRRRRRRRRRRRRRRRRRRRRRDR 5437
 #cat ../../map/trampoline/trampoline3.map | mono test-vm.exe RRRRRRRDDDDDDDDDLLLLLLLURRRRRRRRRRRUUUURRRRRUURRRRDDRRRRRRRRRRRD 436
 #cat ../../map/trampoline/trampoline3.map | mono test-vm.exe RRRRDRDDDDDDDDLLLRRRRLUUUUUDDDDDLUUUUUD 86
-
-
-
-
-
-
-
