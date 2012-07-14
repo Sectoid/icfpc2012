@@ -1,6 +1,7 @@
 #!/bin/bash
 
 cat ../../map/base/contest1.map | mono test-vm.exe LDRDDUULLDLDL 212
+cat ../../map/base/contest1.map | mono test-vm.exe LDRDDUULLDLDWL 212
 cat ../../map/base/contest2.map | mono test-vm.exe RRRRWLRULURULLLDDLDL 280
 cat ../../map/base/contest3.map | mono test-vm.exe LDDDRRRRDDLLLLLDURRRRUURR 275
 cat ../../map/base/contest4.map | mono test-vm.exe DRUULRDDDRDRDRRLUUURUULUDRR 573
