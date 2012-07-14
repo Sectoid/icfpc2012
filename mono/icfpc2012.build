@@ -23,6 +23,7 @@
       <sources>
         <include name="${src.dir}AssemblyInfo.cs" />
         <include name="${src.dir}main.cs" />
+        <include name="${src.dir}Map.cs" />
       </sources>
       <references>
       </references>
