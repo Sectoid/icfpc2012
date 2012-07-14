@@ -19,7 +19,6 @@ cat ../../map/stbuehler/pacman2.map | mono test-vm.exe RUURRRRRRRRRRRDDLLLDDRRRD
 
 # Трупы
 cat ../../map/base/contest2.map | mono test-vm.exe RRRRUD 19
-cat ../../map/base/contest3.map | mono test-vm.exe LDDDRRRRDDLLLLLDURRRRUURR 36
 cat ../../map/base/contest3.map | mono test-vm.exe RDRDRDDDDLUD -12
 cat ../../map/base/contest3.map | mono test-vm.exe LDDDRRRRDDDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUUDUDUDUDUDDUDUDUDUDUDUDUUDDUUDDUUUDDDUUDDUDUDUDUDULD -52
 cat ../../map/base/contest6.map | mono test-vm.exe RUULRRRRRRRRRRUUULLUD 4
