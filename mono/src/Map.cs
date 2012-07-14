@@ -8,48 +8,27 @@ using System.Text;
 namespace ICFPC {
 
 public enum Item {
-  Robot,
-  Empty,
-  Earth,
-  Wall,
-  Rock,
-  Lambda,
-  ClosedLift,
-  OpenLift,
+  Robot = 'R',
+  Empty = ' ',
+  Earth = '.',
+  Wall = '#',
+  Rock = '*',
+  Lambda = '\\',
+  ClosedLift = 'L',
+  OpenLift = 'O',
+}
+
+public enum Command {
+  Left = 'L',
+  Right = 'R',
+  Up = 'U',
+  Down = 'D',
+  Wait = 'W',
+  Abort = 'A',
 }
 
 public class Map {
   private Item[,] state = null;
-
-  public static Item Char2Item(char ch) {
-    switch(ch) {
-      case 'R': return Item.Robot;
-      case ' ': return Item.Empty;
-      case '.': return Item.Earth;
-      case '#': return Item.Wall;
-      case '*': return Item.Rock;
-      case '\\': return Item.Lambda;
-      case 'L': return Item.ClosedLift;
-      case 'O': return Item.OpenLift;
-      default:
-        throw new Exception(String.Format("Bad map character: '{0'}", ch));
-    }
-  }
-
-  public static char Item2Char(Item it) {
-    switch(it) {
-      case Item.Robot: return 'R';
-      case Item.Empty: return ' ';
-      case Item.Earth: return '.';
-      case Item.Wall: return '#';
-      case Item.Rock: return '*';
-      case Item.Lambda: return '\\';
-      case Item.ClosedLift: return 'L';
-      case Item.OpenLift: return 'O';
-      default:
-        throw new Exception(String.Format("Bad item: '{0'}", it));
-    }
-  }
 
   public static Map Read(TextReader src) {
     var lineMap = new List<string>();
@@ -79,7 +58,7 @@ public class Map {
     for(var i = lineMap.Count - 1; i >= 0; i--) {
       var line = lineMap[i];
       for(var j = 0; j < line.Length; j++) {
-        retVal.state[i,j] = Char2Item(line[j]);
+        retVal.state[i,j] = (Item)(line[j]);
       }
     }
 
@@ -137,7 +116,7 @@ public class Map {
     sb.AppendFormat("Map ({0} x {1})\n", M, N);
     for(var i = M - 1; i >= 0; i--) {
       for(var j = 0; j < N; j++) {
-        sb.Append(Item2Char(state[i,j]));
+        sb.Append((char)(state[i,j]));
       }
       sb.AppendLine();
     }
