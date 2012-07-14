@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Linq;
 
 namespace ICFPC {
 
@@ -16,6 +17,26 @@ public enum Item {
   Lambda = '\\',
   ClosedLift = 'L',
   OpenLift = 'O',  
+  
+  InA = 'A',
+  InB = 'B',
+  InC = 'C',
+  InD = 'D',
+  InE = 'E',
+  InF = 'F',
+  InG = 'G',
+  InH = 'H',
+  InI = 'I',
+
+  Out1 = '1',
+  Out2 = '2',
+  Out3 = '3',
+  Out4 = '4',
+  Out5 = '5',
+  Out6 = '6',
+  Out7 = '7',
+  Out8 = '8',
+  Out9 = '9',
 }
 
 public enum Command {
@@ -67,18 +88,22 @@ public class Map {
       }
     }
 
+    var inOutMap = new Dictionary<Item, Point>();
     for(var i = lineMap.Count - 1; i >= 0; i--) {
       var line = lineMap[i];
       for(var j = 0; j < line.Length; j++) {
         var x = j; var y = lineMap.Count - 1 - i;
-
-        retVal[x,y] = (Item)(line[j]);
-        if(retVal[x,y] == Item.Robot) {
+        var item = (Item)(line[j]);
+        retVal[x,y] = item;
+        if(item == Item.Robot) {
           retVal.X = x;
           retVal.Y = y;
         }
-        else if(retVal[x,y] == Item.Lambda) {
+        else if(item == Item.Lambda) {
           retVal.LambdasLeft++;
+        }
+        else if(item.IsIn() || item.IsOut()) {
+          inOutMap[item] = new Point(x, y);
         }
       }
     }
@@ -101,7 +126,23 @@ public class Map {
         // Console.Error.WriteLine("Waterproof tag found!");
         retVal.Waterproof = int.Parse(data[1]);
         continue;
-      };
+      }
+      else if(data[0] == "Trampoline") {
+        var inp = (Item)data[1][0]; var inPoint = inOutMap[inp];
+        var outp = (Item)data[3][0]; var outPoint = inOutMap[outp];
+
+        retVal.LinkedOutPoints[inp] = new KeyValuePair<Point, List<Point>>(inOutMap[outp], 
+                                                                           new List<Point>( new [] { inOutMap[inp], } )); 
+
+        foreach(var regInp in retVal.LinkedOutPoints) {
+          if(regInp.Key == inp) continue; // Skip self;
+
+          if(regInp.Value.Key == outPoint) {
+            regInp.Value.Value.Add(inPoint);
+            retVal.LinkedOutPoints[inp].Value.Add(inOutMap[regInp.Key]);
+          }
+        }
+      }
     }
     
     Map.first = retVal;
@@ -119,6 +160,7 @@ public class Map {
     Water = 0; Flooding = 0; Waterproof = 10;
     State = RobotState.Mining;
     TurnsUnderWater = 0; TurnNumber = 0;
+    LinkedOutPoints = new Dictionary<Item, KeyValuePair<Point, List<Point>>>();
   }
 
   public Map Clone() {
@@ -135,6 +177,11 @@ public class Map {
     Water = other.Water; Flooding = other.Flooding; Waterproof = other.Waterproof;
     State = other.State; 
     TurnsUnderWater = other.TurnsUnderWater; TurnNumber = other.TurnNumber;
+
+    foreach(var record in other.LinkedOutPoints) {
+      LinkedOutPoints[record.Key] = record.Value;
+    }
+
     return this;
   }
 
@@ -154,12 +201,24 @@ public class Map {
   public int TurnsUnderWater {get; private set; }
   public int TurnNumber {get; private set; }
 
+  public Dictionary<Item, KeyValuePair<Point, List<Point>>> LinkedOutPoints { get; private set; }
+  // public Dictionary<Item, Point> Out { get; private set; }
+
   public Item this[int x, int y] {
     get {
       return this.state[y,x];
     }
     set {
       this.state[y,x] = value;
+    }
+  }
+
+  public Item this[Point p] {
+    get {
+      return this[p.X, p.Y];
+    }
+    set {
+      this[p.X, p.Y] = value;
     }
   }
 
@@ -253,6 +312,14 @@ public class Map {
         this[nX - 1, nY] = Item.Rock;
       }
     }
+    else if(nItem.IsIn()) {
+      var teleportData = this.LinkedOutPoints[nItem];
+      
+      foreach(var item in teleportData.Value) {
+        this[item] = Item.Empty;
+      }
+      this.Move(teleportData.Key);
+    }
 
     // Underwater checks
     if(Y <= Water) {
@@ -310,6 +377,12 @@ public class Map {
 
     // Console.Error.WriteLine("Turn done. Score: {0}", this.Score);
     return this;
+  }
+
+  private void Move(Point to) {
+    this[X,Y] = Item.Empty;
+    this[to.X,to.Y] = Item.Robot;
+    X = to.X; Y = to.Y;
   }
 
   private void Move(int nX, int nY) {
