@@ -15,7 +15,7 @@ public enum Item {
   Rock = '*',
   Lambda = '\\',
   ClosedLift = 'L',
-  OpenLift = 'O',
+  OpenLift = 'O',  
 }
 
 public enum Command {
@@ -25,6 +25,13 @@ public enum Command {
   Down = 'D',
   Wait = 'W',
   Abort = 'A',
+}
+
+public enum RobotState {
+  Mining,
+  Abort,
+  Finish,
+  Dead,
 }
 
 [Serializable]
@@ -109,6 +116,7 @@ public class Map {
     M = m; N = n; X = 0; Y = 0;
     Score = 0; LambdasLeft = 0; LambdasCollected = 0;
     Water = 0; Flooding = 0; Waterproof = 10;
+    State = RobotState.Mining; 
   }
 
   public Map Clone() {
@@ -123,9 +131,11 @@ public class Map {
     Score = other.Score; 
     LambdasLeft = other.LambdasLeft; LambdasCollected = other.LambdasCollected;
     Water = other.Water; Flooding = other.Flooding; Waterproof = other.Waterproof;
+    State = other.State;
     return this;
   }
 
+  public RobotState State { get; private set; }
   public int LambdasCollected { get; private set; }
   public int LambdasLeft { get; private set; }
   public int Score { get; private set; }
@@ -150,7 +160,7 @@ public class Map {
 
   public override string ToString() {
     var sb = new StringBuilder();
-    sb.AppendFormat("Map ({0} x {1}), robot position: ({2} x {3}), score = {4}\n", M, N, X, Y, Score);
+    sb.AppendFormat("Map ({0} x {1}), robot position: ({2} x {3}), robot state: {4}, score = {5}\n", M, N, X, Y, State, Score);
     for(var i = M - 1; i >= 0; i--) {
       for(var j = 0; j < N; j++) {
         sb.Append((char)(state[i,j]));
@@ -180,6 +190,10 @@ public class Map {
   }
 
   public Map Execute(Command cmd) {
+    if(State != RobotState.Mining) {
+      return this;
+    }
+
     var next = this.Rotate();
 
     if(cmd == Command.Abort) {
@@ -267,6 +281,11 @@ public class Map {
       }
     }
 
+    // Check 'Death' conditions
+    if(((Y+1) < M) && (old[X, Y+1] != Item.Rock) && (this[X, Y+1] == Item.Rock)) {
+      State = RobotState.Dead;
+      Score -= 25 * LambdasCollected;
+    }
     // Console.Error.WriteLine("Turn done. Score: {0}", this.Score);
     return this;
   }
@@ -284,11 +303,13 @@ public class Map {
 
   private void EnterLift() {
     Score += (50 * LambdasCollected);
+    State = RobotState.Finish;
     // Console.Error.WriteLine("Lift entered!");
   }
 
   private void Abort() {
     Score += (25 * LambdasCollected);
+    State = RobotState.Abort;
     // Console.Error.WriteLine("Aborted!");
   }
 }
