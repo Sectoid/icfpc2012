@@ -141,7 +141,7 @@ public class Map {
       }
       sb.AppendLine();
     }
-    sb.AppendFormat("Water: {0}, Flooding: {1}, Waterproof: {2}\n", Water, Flooding, Waterproof);
+    sb.AppendFormat("Water: {0}, Flooding: {1}, Waterproof: {2}", Water, Flooding, Waterproof);
     return sb.ToString();
   }
 }
