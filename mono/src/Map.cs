@@ -284,7 +284,6 @@ public class Map {
     // Check 'Death' conditions
     if(((Y+1) < M) && (old[X, Y+1] != Item.Rock) && (this[X, Y+1] == Item.Rock)) {
       State = RobotState.Dead;
-      Score -= 25 * LambdasCollected;
     }
     // Console.Error.WriteLine("Turn done. Score: {0}", this.Score);
     return this;
